@@ -1,0 +1,12 @@
+.main {
+  margin: 100px auto;
+  background: #7a8ccf;
+  display: flex;
+  max-width: 1000px;
+  justify-content: space-around;
+}
+
+.devs-list {
+  display: flex;
+  flex-direction: column;
+}
