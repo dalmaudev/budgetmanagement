@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DeveloperComponent } from './developer/developer.component';
+import { DeveloperComponent } from './components/developer/developer.component';
 import { DEVS_DATA } from '../assets/data/devs-data';
 
 @Component({
