@@ -1,9 +1,11 @@
-<h1>{{ title }}</h1>
-<div class="main">
+<h1>{{ appTitle }}</h1>
+<main class="main">
   <div class="devs-list">
     @for (dev of devs; track dev.id) {
-    <app-developer [dev]="dev" />
+    <app-developer [dev]="dev" (devSelect)="onSelectDev($event)" />
     }
   </div>
-  <div>devsDetail</div>
-</div>
+  <div>
+    <app-developer-detail [dev]="selectedDev" />
+  </div>
+</main>
