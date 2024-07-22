@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Developer } from '../../../models/developer.model';
 
 @Component({
@@ -10,8 +10,13 @@ import { Developer } from '../../../models/developer.model';
 })
 export class DeveloperComponent {
   @Input({ required: true }) dev?: Developer;
+  @Output() devSelect = new EventEmitter<string>();
 
   get devAvatarPath() {
     return 'assets/devs/avatar/' + this.dev?.avatar;
+  }
+
+  onSelectedDev() {
+    this.devSelect.emit(this.dev?.id);
   }
 }
