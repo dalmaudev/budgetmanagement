@@ -1,0 +1,15 @@
+@if (dev) {
+<img
+  class="dev-details-img"
+  [src]="dev.avatarURL"
+  alt=""
+  width="64"
+  height="64"
+/>
+<p>{{ dev.name }}</p>
+<p>{{ dev.id }}</p>
+<!-- <p>Budget: {{ dev?.budget | currency : "EUR" : "symbol" : "4.0" : "es-ES" }}</p> -->
+<p>Budget: {{ dev.budget }}€</p>
+}@else {
+<p>Developer Detail</p>
+}
