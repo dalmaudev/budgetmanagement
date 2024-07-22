@@ -1,5 +1,7 @@
 export interface Developer {
   id: string;
-  avatar: string;
   name: string;
+  avatar: string;
+  avatarURL?: string;
+  budget: number;
 }
