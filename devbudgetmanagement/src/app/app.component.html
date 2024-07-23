@@ -1,11 +1,21 @@
+@if (isAddingDeveloper) {
+<app-new-developer
+  (cancel)="onCancelAddDeveloper()"
+  (add)="onAddDeveloper($event)"
+/>
+}
 <h1>{{ appTitle }}</h1>
 <main class="main">
   <div class="devs-list">
     @for (dev of devs; track dev.id) {
     <app-developer [dev]="dev" (devSelect)="onSelectDev($event)" />
     }
+    <button (click)="onStartAddDeveloper()">ADD DEV</button>
   </div>
   <div>
-    <app-developer-detail [dev]="selectedDev" />
+    <app-developer-detail
+      [dev]="selectedDev"
+      (delete)="onRemoveDeveloper($event)"
+    />
   </div>
 </main>

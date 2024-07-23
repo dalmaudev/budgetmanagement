@@ -1,4 +1,10 @@
-@if (dev) {
+@if (isEditingDeveloper) {
+<app-edit-developer
+  [dev]="dev"
+  (cancel)="onCancelEditDeveloper()"
+  (edit)="onEditDeveloper($event)"
+/>
+} @if (dev) {
 <img
   class="dev-details-img"
   [src]="dev.avatarURL"
@@ -10,6 +16,9 @@
 <p>{{ dev.id }}</p>
 <!-- <p>Budget: {{ dev?.budget | currency : "EUR" : "symbol" : "4.0" : "es-ES" }}</p> -->
 <p>Budget: {{ dev.budget }}€</p>
+<hr />
+<button (click)="onDeletedDev()">Remove</button>
+<button (click)="onStartEditDeveloper()">Edit</button>
 }@else {
 <p>Developer Detail</p>
 }

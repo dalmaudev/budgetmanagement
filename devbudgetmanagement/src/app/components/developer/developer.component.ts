@@ -12,9 +12,9 @@ export class DeveloperComponent {
   @Input({ required: true }) dev?: Developer;
   @Output() devSelect = new EventEmitter<string>();
 
-  get devAvatarPath() {
-    return 'assets/devs/avatar/' + this.dev?.avatar;
-  }
+  // get devAvatarPath() {
+  //   return 'assets/devs/avatar/' + this.dev?.avatar;
+  // }
 
   onSelectedDev() {
     this.devSelect.emit(this.dev?.id);
