@@ -26,8 +26,8 @@ export class AppComponent {
   isAddingDeveloper = false;
   DEV_AVATAR_DEFAULT = 'user-3.jpg';
 
-  constructor(private developer: DeveloperService) {
-    this.devs = this.developer.getDevsData();
+  constructor(private developerService: DeveloperService) {
+    this.devs = this.developerService.getDevsData();
   }
 
   get selectedDev() {
@@ -47,18 +47,12 @@ export class AppComponent {
   }
 
   onAddDeveloper(devData: AddDeveloper) {
-    this.devs.unshift({
-      id: new Date().getTime().toString(),
-      name: devData.name,
-      avatar: this.DEV_AVATAR_DEFAULT,
-      avatarURL: 'assets/devs/avatar/' + this.DEV_AVATAR_DEFAULT,
-      budget: devData.budget,
-    });
-    this.developer.saveDevs();
+    this.developerService.addDeveloper(devData);
     this.isAddingDeveloper = false;
   }
 
   onRemoveDeveloper(selectedDevId: string) {
-    this.developer.removeDeveloper(selectedDevId);
+    this.developerService.removeDeveloper(selectedDevId);
+    this.devs = this.developerService.devs;
   }
 }

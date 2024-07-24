@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DEVS_DATA } from '../../assets/data/devs-data';
 import { Developer } from '../../models/developer.model';
+import { AddDeveloper } from '../../models/addDeveloper.mode';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,7 @@ export class DeveloperService {
     this.devs = storedDevs ? JSON.parse(storedDevs) : DEVS_DATA;
 
     // Asegura que cada developer tenga el avatarURL correcto
-    for (let i = 0; i < this.devs.length; i++) {
-      this.devs[i].avatarURL = 'assets/devs/avatar/' + this.devs[i].avatar;
-    }
+    this.setAvatarURLs();
   }
 
   getDevsData(): Developer[] {
@@ -30,13 +29,56 @@ export class DeveloperService {
     // console.log(this.devs);
   }
 
-  // Edita un desarrollador por ID
-  editDeveloper(devId: string) {}
+  addDeveloper(devData: AddDeveloper): Developer[] {
+    const DEV_AVATAR_DEFAULT = 'user-3.jpg';
+
+    this.devs.unshift({
+      id: new Date().getTime().toString(),
+      name: devData.name,
+      avatar: DEV_AVATAR_DEFAULT,
+      avatarURL: 'assets/devs/avatar/' + DEV_AVATAR_DEFAULT,
+      budget: devData.budget,
+    });
+    this.saveDevs();
+
+    return this.devs;
+  }
+
+  // Edita un desarrollador
+  editDeveloper(editDeveloper: Developer): Developer[] {
+    const devId = this.devs.findIndex((dev) => dev.id === editDeveloper.id);
+    if (devId !== -1) {
+      this.devs[devId].budget = editDeveloper.budget;
+      this.devs[devId].name = editDeveloper.name;
+    }
+    this.saveDevs();
+
+    return this.devs;
+  }
 
   // Elimina un desarrollador por ID
-  removeDeveloper(devId: string): void {
-    this.devs = this.devs.filter((dev) => dev.id !== devId);
+  removeDeveloper(devId: string): Developer[] {
+    const updatedDevs: Developer[] = [];
+    this.devs.forEach((dev) => {
+      if (dev.id !== devId) {
+        updatedDevs.push(dev);
+      }
+    });
+    this.devs = updatedDevs;
     this.saveDevs();
-    // necesito refrescar el component
+    return this.devs;
+  }
+
+  private getDevelopers(): Developer[] {
+    const storedDevs: Developer[] = JSON.parse(
+      localStorage.getItem(this.storageKey)!
+    );
+    return storedDevs && storedDevs.length > 0 ? storedDevs : this.devs;
+  }
+
+  private setAvatarURLs(): void {
+    this.devs.forEach((dev) => {
+      dev.avatarURL = 'assets/devs/avatar/' + dev.avatar;
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Developer } from '../../models/developer.model';
 import { AddDeveloper } from '../../models/addDeveloper.mode';
 import { FormsModule } from '@angular/forms';
@@ -10,23 +10,30 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './edit-developer.component.html',
   styleUrl: './edit-developer.component.css',
 })
-export class EditDeveloperComponent {
+export class EditDeveloperComponent implements OnInit {
   @Input({ required: true }) dev?: Developer;
   @Output() cancel = new EventEmitter<void>();
-  @Output() edit = new EventEmitter<AddDeveloper>();
+  @Output() edit = new EventEmitter<Developer>();
 
-  enteredDevName = this.dev?.name!;
-  enteredDevBudget = this.dev?.budget!;
+  enteredDevName!: string;
+  enteredDevBudget!: number;
+
+  ngOnInit() {
+    this.enteredDevName = this.dev?.name!;
+    this.enteredDevBudget = this.dev?.budget!;
+  }
 
   onCancel() {
     this.cancel.emit();
   }
 
   onSubmit() {
-    this.edit.emit({
-      id: this.dev?.id,
+    const updatedDev: Developer = {
+      ...this.dev!,
       name: this.enteredDevName,
       budget: this.enteredDevBudget,
-    });
+    };
+
+    this.edit.emit(updatedDev);
   }
 }
